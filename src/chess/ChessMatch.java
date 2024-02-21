@@ -19,7 +19,7 @@ public class ChessMatch {
 			for(int j=0; j<board.getColumns(); j++) {
 				// Utilizado DownCasting na matriz abaixo
 				// Porque queremos que a matriz receba as posições da classe ChessPiece
-				// E não da classe maior Piece
+				// E não da maior classe Piece
 				
 				matriz[i][j] = (ChessPiece) board.piece(i, j);
 			}
@@ -33,9 +33,19 @@ public class ChessMatch {
 	
 	// Definindo uma nova peça para o tabuleiro
 	private void initialSetup() {
-		placeNewPiece('b', 6, new Rook(board, Color.WHITE));
-		placeNewPiece('e', 8, new King(board, Color.BLACK));
-		placeNewPiece('e', 1, new King(board, Color.WHITE));
+		placeNewPiece('c', 1, new Rook(board, Color.WHITE));
+        placeNewPiece('c', 2, new Rook(board, Color.WHITE));
+        placeNewPiece('d', 2, new Rook(board, Color.WHITE));
+        placeNewPiece('e', 2, new Rook(board, Color.WHITE));
+        placeNewPiece('e', 1, new Rook(board, Color.WHITE));
+        placeNewPiece('d', 1, new King(board, Color.WHITE));
+
+        placeNewPiece('c', 7, new Rook(board, Color.BLACK));
+        placeNewPiece('c', 8, new Rook(board, Color.BLACK));
+        placeNewPiece('d', 7, new Rook(board, Color.BLACK));
+        placeNewPiece('e', 7, new Rook(board, Color.BLACK));
+        placeNewPiece('e', 8, new Rook(board, Color.BLACK));
+        placeNewPiece('d', 8, new King(board, Color.BLACK));
 		
 	}
 }
