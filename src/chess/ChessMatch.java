@@ -44,6 +44,11 @@ public class ChessMatch {
 			throw new ChessException("Não existe uma peça nessa origem");
 		}
 		
+		// Método que trata a exceção = movimento escolhido não existe
+		if(!board.piece(position).isThereAnyPossibleMove()) {
+			throw new ChessException("Não existe movimentos para a peça escolhida");
+		}
+		
 	}
 	
 	private Piece makeMove(Position source, Position target) {
