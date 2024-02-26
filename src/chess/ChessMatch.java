@@ -29,6 +29,14 @@ public class ChessMatch {
 		return matriz;
 	}
 	
+	// Método que informa as posições possíveis para fazer a jogada
+	public boolean[][] possibleMoves(ChessPosition sourcePosition){
+		Position position = sourcePosition.toPosition();
+		validateSourcePosition(position);
+		
+		return board.piece(position).possibleMoves();
+	}
+	
 	// Método que realiza o movimento da peça, recebendo posição de origem e destino
 	public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition) {
 		Position source = sourcePosition.toPosition();
