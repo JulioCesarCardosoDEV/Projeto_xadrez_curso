@@ -1,5 +1,8 @@
 package chess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
@@ -10,6 +13,9 @@ public class ChessMatch {
 	private Board board;
 	private int turn;
 	private Color currentPlayer;
+	
+	private List<Piece> piecesOnTheBoard = new ArrayList<>();
+	private List<Piece> capturedPieces = new ArrayList<>();
 	
 	// Definindo o tamanho do tabuleiro
 	public ChessMatch() {
@@ -33,7 +39,7 @@ public class ChessMatch {
 			for(int j=0; j<board.getColumns(); j++) {
 				// Utilizado DownCasting na matriz abaixo
 				// Porque queremos que a matriz receba as posições da classe ChessPiece
-				// E não da maior classe Piece
+				// E não da outra e maior classe Piece
 				
 				matriz[i][j] = (ChessPiece) board.piece(i, j);
 			}
@@ -94,6 +100,13 @@ public class ChessMatch {
 		// Remove a possivel peça na posição de destino
 		Piece capturedPiece = board.removePiece(target);
 		board.placePiece(p, target);
+		
+		// Sempre que capturar uma peça, está será removida da lista de peças do tabuleiro e
+		// A será adicionada na lista de peças capturadas
+		if(capturedPiece != null) {
+			piecesOnTheBoard.remove(capturedPiece);
+			capturedPieces.add(capturedPiece);
+		}
 		return capturedPiece;
 	}
 	
@@ -108,6 +121,8 @@ public class ChessMatch {
 	
 	private void placeNewPiece(char column, int row, ChessPiece piece) {
 		board.placePiece(piece, new ChessPosition(column, row).toPosition());
+		// Adicionando as peças na lista de peças
+		piecesOnTheBoard.add(piece);
 	}
 	
 	// Definindo uma nova peça para o tabuleiro
