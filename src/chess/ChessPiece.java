@@ -6,16 +6,32 @@ import boardgame.Position;
 
 public abstract class ChessPiece extends Piece{
 	private Color color;
+	private int moveCount;
 
 	// Construtor utilizando super, porque a classe ChessPiece herda Piece
 	
 	public ChessPiece(Board board, Color color) {
 		super(board);
 		this.color = color;
+		this.moveCount = 0;
 	}
 
 	public Color getColor() {
 		return color;
+	}
+	
+	public int getMoveCount() {
+		return moveCount;
+	}
+	
+	// incremento na variável moveCount
+	public void increaseMoveCount() {
+		moveCount++;
+	}
+	
+	// decremento na variável moveCount
+	public void decreaseMoveCount() {
+		moveCount--;
 	}
 	
 	// Retorna a posição 
