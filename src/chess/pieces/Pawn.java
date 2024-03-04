@@ -47,16 +47,14 @@ public class Pawn extends ChessPiece{
 		else {
 			// Posicao para frente
 			p.setValues(position.getRow() + 1, position.getColumn());
-			// Se existir uma posição a frente do peão e, for uma casa vazia, é possível ir
-			// para frente
+			// Se existir uma posição a frente do peão e, for uma casa vazia, é possível ir para frente
 			if (getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)) {
 				mat[p.getRow()][p.getColumn()] = true;
 			}
 			// Primeiro movimento do peão, é possível andar até 2 casas para frente
 			p.setValues(position.getRow() + 2, position.getColumn());
-			Position p2 = new Position(position.getRow() - 1, position.getColumn());
-			// Se o contador de movimentos for igual a 0, significa que é o primeiro
-			// movimento do peão
+			Position p2 = new Position(position.getRow() + 1, position.getColumn());
+			// Se o contador de movimentos for igual a 0, significa que é o primeiro movimento do peão
 			if (getBoard().positionExists(p) && !getBoard().thereIsAPiece(p) && getBoard().positionExists(p2)
 					&& !getBoard().thereIsAPiece(p2) && getMoveCount() == 0) {
 				mat[p.getRow()][p.getColumn()] = true;
