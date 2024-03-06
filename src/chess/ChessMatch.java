@@ -254,7 +254,7 @@ public class ChessMatch {
 			// Rainha branca
 			placeNewPiece('d', 1, new Queen(board, Color.WHITE));
 			// Rei branco
-	        placeNewPiece('e', 1, new King(board, Color.WHITE));
+	        placeNewPiece('e', 1, new King(board, Color.WHITE, this));
 	        // Peões brancos
 	        placeNewPiece('a', 2, new Pawn(board, Color.WHITE));
 	        placeNewPiece('b', 2, new Pawn(board, Color.WHITE));
@@ -277,7 +277,7 @@ public class ChessMatch {
 	     	// Rainha preta
 	     	placeNewPiece('d', 8, new Queen(board, Color.BLACK));
 	        // Rei preto
-	        placeNewPiece('e', 8, new King(board, Color.BLACK));
+	        placeNewPiece('e', 8, new King(board, Color.BLACK, this));
 	        // Peões pretos
 	        placeNewPiece('a', 7, new Pawn(board, Color.BLACK));
 	        placeNewPiece('b', 7, new Pawn(board, Color.BLACK));
