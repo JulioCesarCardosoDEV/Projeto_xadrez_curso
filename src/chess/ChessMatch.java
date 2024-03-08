@@ -49,7 +49,7 @@ public class ChessMatch {
 	public boolean getCheckMate() {
 		return checkMate;
 	}
-	
+
 	public ChessPiece getEnPassantVulnerable() {
 		return enPassantVulnerable;
 	}
@@ -90,9 +90,9 @@ public class ChessMatch {
 			undoMove(source, target, capturedPiece);
 			throw new ChessException("Você não pode se colocar em xeque");
 		}
-		
+
 		// Variável que tratará o movimento en passant
-		ChessPiece movedPiece = (ChessPiece)board.piece(target);
+		ChessPiece movedPiece = (ChessPiece) board.piece(target);
 
 		// se o jogador colocar o oponente em xeque, a variável xeque vira true
 		check = (testCheck(opponent(currentPlayer))) ? true : false;
@@ -103,12 +103,13 @@ public class ChessMatch {
 			// Troca de turno
 			nextTurn();
 		}
-		
+
 		// En Passant: se o peao conseguir realizar o movimento inicial de 2 casas
 		// esse peão pode sofrer a jogada en passant
-		if(movedPiece instanceof Pawn && (target.getRow() == source.getRow() - 2 || target.getRow() == source.getRow() + 2)) {
+		if (movedPiece instanceof Pawn
+				&& (target.getRow() == source.getRow() - 2 || target.getRow() == source.getRow() + 2)) {
 			enPassantVulnerable = movedPiece;
-		}else {
+		} else {
 			enPassantVulnerable = null;
 		}
 
@@ -171,15 +172,30 @@ public class ChessMatch {
 		}
 
 		// Roque grande
-		// Se a peça for um rei e o seu movimento for 2 casas para a direita, é um roque
-		// pequeno
 		if (p instanceof King && target.getColumn() == source.getColumn() - 2) {
 			Position sourceT = new Position(source.getRow(), source.getColumn() - 4);
 			Position targetT = new Position(source.getRow(), source.getColumn() - 1);
 			ChessPiece rook = (ChessPiece) board.removePiece(sourceT);
 			board.placePiece(rook, targetT);
 			rook.increaseMoveCount();
+		}
 
+		// En Passant
+		if (p instanceof Pawn) {
+			// Se o peão fizer um movimento na diagonal e não capturar uma peça, é um en
+			// passant
+			if (source.getColumn() != target.getColumn() && capturedPiece == null) {
+				Position pawnPosition;
+				if (p.getColor() == Color.WHITE) {
+					pawnPosition = new Position(target.getRow() + 1, target.getColumn());
+				} else {
+					pawnPosition = new Position(target.getRow() - 1, target.getColumn());
+				}
+
+				capturedPiece = board.removePiece(pawnPosition);
+				capturedPieces.add(capturedPiece);
+				piecesOnTheBoard.remove(capturedPiece);
+			}
 		}
 
 		return capturedPiece;
@@ -196,9 +212,10 @@ public class ChessMatch {
 			capturedPieces.remove(capturedPiece);
 			piecesOnTheBoard.add(capturedPiece);
 		}
-		
+
 		// Roque pequeno
-		// Se a peça for um rei e o seu movimento for 2 casas para a direita, é um roque pequeno
+		// Se a peça for um rei e o seu movimento for 2 casas para a direita, é um roque
+		// pequeno
 		if (p instanceof King && target.getColumn() == source.getColumn() + 2) {
 			Position sourceT = new Position(source.getRow(), source.getColumn() + 3);
 			Position targetT = new Position(source.getRow(), source.getColumn() + 1);
@@ -208,13 +225,27 @@ public class ChessMatch {
 		}
 
 		// Roque grande
-		// Se a peça for um rei e o seu movimento for 2 casas para a direita, é um roque pequeno
 		if (p instanceof King && target.getColumn() == source.getColumn() - 2) {
 			Position sourceT = new Position(source.getRow(), source.getColumn() - 4);
 			Position targetT = new Position(source.getRow(), source.getColumn() - 1);
 			ChessPiece rook = (ChessPiece) board.removePiece(targetT);
 			board.placePiece(rook, sourceT);
 			rook.decreaseMoveCount();
+		}
+
+		// En Passant
+		if (p instanceof Pawn) {
+			// Verificando se a peça pode realizar o enPassant
+			if (source.getColumn() != target.getColumn() && capturedPiece == enPassantVulnerable) {
+				ChessPiece pawn = (ChessPiece)board.removePiece(target);
+				Position pawnPosition;
+				if (p.getColor() == Color.WHITE) {
+					pawnPosition = new Position(3 , target.getColumn());
+				} else {
+					pawnPosition = new Position(4 , target.getColumn());
+				}
+				board.placePiece(pawn, pawnPosition);
+			}
 		}
 	}
 
